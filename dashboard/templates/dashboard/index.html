@@ -138,8 +138,15 @@
     .line-name { font-size: 12px; font-weight: 500; }
     .line-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
     .line-val { font-size: 12px; font-family: var(--mono); text-align: right; color: var(--text); }
+    
+    /* Bars and Gauges with CSS Variables config */
     .bar-wrap { height: 2px; background: var(--subtle); border-radius: 1px; margin-top: 3px; }
-    .bar-fill { height: 100%; border-radius: 1px; }
+    .bar-fill { height: 100%; border-radius: 1px; width: var(--progress-width, 0%); }
+    
+    .fill-teal { background: var(--teal); }
+    .fill-amber { background: var(--amber); }
+    .fill-red { background: var(--red); }
+
     .chip {
       display: inline-block; font-size: 10px; font-family: var(--mono);
       padding: 2px 7px; border-radius: 10px; text-align: center;
@@ -183,7 +190,7 @@
     .gauge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .gauge-lbl { font-size: 11px; color: var(--text); width: 60px; flex-shrink: 0; }
     .gauge-track { flex: 1; height: 3px; background: var(--subtle); border-radius: 2px; }
-    .gauge-fill { height: 100%; border-radius: 2px; transition: width .4s; }
+    .gauge-fill { height: 100%; border-radius: 2px; transition: width .4s; width: var(--progress-width, 0%); }
     .gauge-pct { font-size: 11px; font-family: var(--mono); color: var(--muted); width: 34px; text-align: right; }
 
     /* Materials */
@@ -238,7 +245,6 @@
 <body>
 <div class="shell">
 
-  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-left">
       <div class="brand"><div class="brand-dot"></div> Command Room</div>
@@ -257,7 +263,6 @@
     </div>
   </div>
 
-  <!-- Filter bar (auto-submitting) -->
   <form method="get" id="filter-form">
     <div class="filterbar">
       <label>Line</label>
@@ -289,10 +294,8 @@
     </div>
   </form>
 
-  <!-- Scrollable content -->
   <div class="content">
 
-    <!-- KPIs -->
     <div class="kpi-row">
       <div class="kpi-card">
         <div class="kpi-label">Accumulated yield</div>
@@ -316,7 +319,6 @@
       </div>
     </div>
 
-    <!-- Main grid: chart + feed -->
     <div class="main-grid">
       <div class="panel">
         <div class="panel-head">
@@ -324,7 +326,7 @@
           <span class="panel-badge">Live</span>
         </div>
         <div class="chart-wrap">
-          <canvas id="yieldChart" role="img" aria-label="Line chart of hourly yield per production line"></canvas>
+          <canvas id="yieldChart" role="img" aria-label="Line chart of hourly yield"></canvas>
         </div>
         <div class="lines-head">
           <span>Production line</span>
@@ -342,7 +344,7 @@
           <div class="line-val">
             {{ summary.yield_rate }}%
             <div class="bar-wrap">
-              <div class="bar-fill" style="width:{{ summary.yield_rate }}%;background:{% if summary.yield_rate >= 96 %}var(--teal){% elif summary.yield_rate >= 90 %}var(--amber){% else %}var(--red){% endif %}"></div>
+              <div class="bar-fill {% if summary.yield_rate >= 96 %}fill-teal{% elif summary.yield_rate >= 90 %}fill-amber{% else %}fill-red{% endif %}" style="--progress-width: {{ summary.yield_rate }}%;"></div>
             </div>
           </div>
           <div style="text-align:right">
@@ -358,7 +360,6 @@
         {% endfor %}
       </div>
 
-      <!-- Sensor feed -->
       <div class="panel">
         <div class="panel-head">
           <span class="panel-title">IoT sensor feed</span>
@@ -385,10 +386,8 @@
       </div>
     </div>
 
-    <!-- Bottom row -->
     <div class="bottom-row">
 
-      <!-- Gauges -->
       <div class="mini-panel">
         <div class="mini-head">Process efficiency</div>
         <div class="mini-body">
@@ -396,7 +395,7 @@
           <div class="gauge-row">
             <div class="gauge-lbl">{{ summary.line.code|slice:"5:" }}</div>
             <div class="gauge-track">
-              <div class="gauge-fill" style="width:{{ summary.oee }}%;background:{% if summary.oee >= 80 %}var(--teal){% elif summary.oee >= 60 %}var(--amber){% else %}var(--red){% endif %}"></div>
+              <div class="gauge-fill {% if summary.oee >= 80 %}fill-teal{% elif summary.oee >= 60 %}fill-amber{% else %}fill-red{% endif %}" style="--progress-width: {{ summary.oee }}%;"></div>
             </div>
             <div class="gauge-pct">{{ summary.oee }}%</div>
           </div>
@@ -404,7 +403,6 @@
         </div>
       </div>
 
-      <!-- Materials -->
       <div class="mini-panel">
         <div class="mini-head">Material purchases</div>
         <div class="mini-body">
@@ -424,7 +422,6 @@
         </div>
       </div>
 
-      <!-- JWT endpoints -->
       <div class="mini-panel">
         <div class="mini-head">JWT sensor endpoints</div>
         <div class="mini-body">
@@ -432,31 +429,26 @@
           <div class="jwt-endpoint"><span class="jwt-method">GET</span>/api/v2/yield/stream</div>
           <div class="jwt-endpoint"><span class="jwt-method">GET</span>/api/v2/lines/status</div>
           <div class="jwt-endpoint"><span class="jwt-method">POST</span>/api/v2/sensors/event</div>
-          <div class="jwt-meta"><div class="jwt-dot"></div> RS256 · 24h token lifetime · RBAC</div>
-          <div class="jwt-meta"><div class="jwt-dot"></div> POST /api/token/ to authenticate</div>
+          <div class="jwt-meta"><div class="jwt-dot"></div> RS256 · 24h token lifetime</div>
         </div>
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /shell -->
-
-<!-- Session timeout modal -->
-<div class="modal-overlay" id="sessionModal">
-  <div class="modal-box">
-    <div class="modal-icon">⏸</div>
-    <div class="modal-h">Session expiring</div>
-    <div class="modal-p">Your command room terminal has been inactive. You will be logged out automatically to protect plant data.</div>
-    <div class="modal-cd" id="modal-countdown">60</div>
-    <div class="modal-actions">
-      <button class="btn-primary" onclick="extendSession()">Stay logged in</button>
-      <button class="btn-secondary" onclick="window.location='{% url "logout" %}'">Log out now</button>
-    </div>
   </div>
 </div>
 
+<script id="django-session-timeout" type="application/json">{{ session_timeout|default:900 }}</script>
+<script id="django-hourly-labels" type="application/json">{{ hourly_labels|safe|default:"[]" }}</script>
+<script id="django-hourly-datasets" type="application/json">{{ hourly_datasets|safe|default:"{}" }}</script>
+<script id="django-line-codes" type="application/json">{{ line_codes|safe|default:"[]" }}</script>
+
 <script>
-const SESSION_TIMEOUT = {{ session_timeout }};
+// Malinis na JavaScript variables. Walang Django delimiters dito kaya 0 errors sa JS Parser.
+const SESSION_TIMEOUT = Number(document.getElementById('django-session-timeout').textContent);
+const labels = JSON.parse(document.getElementById('django-hourly-labels').textContent);
+const datasets_raw = JSON.parse(document.getElementById('django-hourly-datasets').textContent);
+const line_codes = JSON.parse(document.getElementById('django-line-codes').textContent);
+
 let remaining = SESSION_TIMEOUT;
 let warned = false, cdInterval = null;
 const timerEl = document.getElementById('session-timer');
@@ -468,8 +460,8 @@ function fmt(s) {
 }
 function resetTimer() {
   remaining = SESSION_TIMEOUT; warned = false;
-  timerEl.classList.remove('warning');
-  modal.classList.remove('show');
+  if (timerEl) timerEl.classList.remove('warning');
+  if (modal) modal.classList.remove('show');
   clearInterval(cdInterval);
 }
 ['click','keydown','mousemove','touchstart'].forEach(ev =>
@@ -477,62 +469,60 @@ function resetTimer() {
 
 setInterval(() => {
   remaining = Math.max(0, remaining - 1);
-  timerEl.textContent = fmt(remaining);
-  if (remaining <= 120) timerEl.classList.add('warning');
+  if (timerEl) timerEl.textContent = fmt(remaining);
+  if (remaining <= 120 && timerEl) timerEl.classList.add('warning');
   if (remaining <= 60 && !warned) {
     warned = true;
-    let cd = 60; cdEl.textContent = cd;
-    modal.classList.add('show');
+    let cd = 60; if (cdEl) cdEl.textContent = cd;
+    if (modal) modal.classList.add('show');
     cdInterval = setInterval(() => {
       cd--;
-      cdEl.textContent = cd;
-      if (cd <= 0) { clearInterval(cdInterval); window.location = '{% url "logout" %}'; }
+      if (cdEl) cdEl.textContent = cd;
+      if (cd <= 0) { clearInterval(cdInterval); window.location.href = "{% url 'logout' %}"; }
     }, 1000);
   }
 }, 1000);
 
 function extendSession() {
-  fetch(window.location.href); // ping server to reset server-side session
+  fetch(window.location.href); 
   resetTimer();
 }
 
-// Yield chart
-const labels = {{ hourly_labels|safe }};
-const datasets_raw = {{ hourly_datasets|safe }};
-const line_codes = {{ line_codes|safe }};
+// Chart setup
 const colors = { 'LINE-A':'#1fb882','LINE-B':'#e8a838','LINE-C':'#4d90d4','LINE-D':'#e05252' };
 const dashes  = { 'LINE-A':[],'LINE-B':[],'LINE-C':[],'LINE-D':[5,4] };
 
-new Chart(document.getElementById('yieldChart'), {
-  type: 'line',
-  data: {
-    labels,
-    datasets: line_codes.map(code => ({
-      label: code,
-      data: datasets_raw[code],
-      borderColor: colors[code] || '#7a7d85',
-      backgroundColor: (colors[code] || '#7a7d85') + '18',
-      borderDash: dashes[code] || [],
-      tension: 0.4, pointRadius: 2, borderWidth: 2,
-    }))
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { labels: { color:'#7a7d85', font:{size:10}, boxWidth:10, boxHeight:2 } } },
-    scales: {
-      x: { ticks:{color:'#7a7d85',font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'} },
-      y: { ticks:{color:'#7a7d85',font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'}, min:0 }
+const ctx = document.getElementById('yieldChart');
+if (ctx) {
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: line_codes.map(code => ({
+        label: code,
+        data: datasets_raw[code],
+        borderColor: colors[code] || '#7a7d85',
+        backgroundColor: (colors[code] || '#7a7d85') + '18',
+        borderDash: dashes[code] || [],
+        tension: 0.4, pointRadius: 2, borderWidth: 2,
+      }))
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { color:'#7a7d85', font:{size:10}, boxWidth:10, boxHeight:2 } } },
+      scales: {
+        x: { ticks:{color:'#7a7d85',font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'} },
+        y: { ticks:{color:'#7a7d85',font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'}, min:0 }
+      }
     }
-  }
-});
+  });
+}
+
 function checkManagerPassword() {
   const password = prompt("ENTER MANAGER ACCESS PASSWORD:");
-  if (password === "manager123") {
-    return true; // Papasukin sa Django Admin site
-  } else {
-    alert("ACCESS DENIED: Invalid Manager Password.");
-    return false; // Haharangin at hindi papapapasukin
-  }
+  if (password === "manager123") return true;
+  alert("ACCESS DENIED: Invalid Manager Password.");
+  return false;
 }
 </script>
 </body>
