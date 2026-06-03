@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Room — Manufacturing Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e0f11; --surface: #16181c; --surface-2: #1e2026;
+      --border: rgba(255,255,255,0.07); --border-hi: rgba(255,255,255,0.14);
+      --text: #e8e9eb; --muted: #7a7d85; --subtle: #3a3d44;
+      --teal: #1fb882; --teal-dim: rgba(31,184,130,0.15);
+      --amber: #e8a838; --amber-dim: rgba(232,168,56,0.15);
+      --red: #e05252; --red-dim: rgba(224,82,82,0.15);
+      --blue: #4d90d4; --blue-dim: rgba(77,144,212,0.15);
+      --font: 'IBM Plex Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; }
+
+    /* Layout */
+    .shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+    /* Topbar */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; height: 44px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 13px; }
+    .brand-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px var(--teal); }
+    .plant-tag {
+      font-size: 10px; font-family: var(--mono); color: var(--muted);
+      padding: 2px 7px; border: 1px solid var(--border); border-radius: 4px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .session-pill {
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border: 1px solid var(--border); border-radius: 20px;
+      font-size: 11px; color: var(--muted); font-family: var(--mono);
+    }
+    .session-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    #session-timer { color: var(--text); font-weight: 500; }
+    #session-timer.warning { color: var(--red); }
+    .alert-pill {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 9px; background: var(--red-dim);
+      border: 1px solid var(--red); border-radius: 20px;
+      font-size: 11px; color: var(--red); font-weight: 500;
+    }
+    .user-chip {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--blue-dim); border: 1px solid var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 500; color: var(--blue); font-family: var(--mono);
+    }
+    .nav-link {
+      font-size: 12px; color: var(--muted); text-decoration: none;
+      padding: 4px 8px; border-radius: 4px; transition: all .15s;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface-2); }
+
+    /* Filter bar */
+    .filterbar {
+      display: flex; align-items: center; gap: 10px; padding: 8px 20px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      flex-shrink: 0; flex-wrap: wrap;
+    }
+    .filterbar label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .filterbar select {
+      background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border); border-radius: 5px;
+      padding: 4px 24px 4px 8px; font-size: 12px; font-family: var(--font);
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%237a7d85'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 7px center;
+    }
+    .filterbar select:focus { outline: none; border-color: var(--teal); }
+    .sep { width: 1px; height: 18px; background: var(--border); }
+    .live-indicator { display: flex; align-items: center; gap: 5px; margin-left: auto; font-size: 11px; color: var(--teal); }
+
+    /* Scrollable body */
+    .content { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+    /* KPI row */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .kpi-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .kpi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+    .kpi-value { font-size: 28px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 6px; }
+    .kpi-delta { font-size: 11px; display: flex; align-items: center; gap: 4px; }
+    .up { color: var(--teal); } .dn { color: var(--red); } .neutral { color: var(--muted); }
+
+    /* Main grid */
+    .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+    .panel {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+    }
+    .panel-title { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .panel-badge {
+      font-size: 10px; font-family: var(--mono);
+      padding: 2px 7px; background: var(--teal-dim); color: var(--teal);
+      border: 1px solid var(--teal); border-radius: 4px;
+    }
+    .panel-badge.warn { background: var(--amber-dim); color: var(--amber); border-color: var(--amber); }
+
+    /* Chart */
+    .chart-wrap { padding: 14px; height: 210px; position: relative; }
+
+    /* Lines table */
+    .lines-head {
+      display: grid; grid-template-columns: 1fr 70px 70px 80px;
+      padding: 7px 14px; font-size: 10px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .04em;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .line-row {
+      display: grid; grid-template-columns: 1fr 70px 70px 80px;
+      padding: 9px 14px; align-items: center;
+      border-bottom: 1px solid var(--border); transition: background .12s;
+    }
+    .line-row:last-child { border-bottom: none; }
+    .line-row:hover { background: var(--surface-2); }
+    .line-name { font-size: 12px; font-weight: 500; }
+    .line-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+    .line-val { font-size: 12px; font-family: var(--mono); text-align: right; color: var(--text); }
+    .bar-wrap { height: 2px; background: var(--subtle); border-radius: 1px; margin-top: 3px; }
+    .bar-fill { height: 100%; border-radius: 1px; }
+    .chip {
+      display: inline-block; font-size: 10px; font-family: var(--mono);
+      padding: 2px 7px; border-radius: 10px; text-align: center;
+    }
+    .chip-run  { background: var(--teal-dim);  color: var(--teal);  border: 1px solid var(--teal); }
+    .chip-warn { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber); }
+    .chip-stop { background: var(--red-dim);   color: var(--red);   border: 1px solid var(--red); }
+
+    /* Sensor feed */
+    .feed-body { padding: 10px 14px; display: flex; flex-direction: column; gap: 0; }
+    .feed-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-icon {
+      width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-family: var(--mono); font-weight: 500;
+    }
+    .fi-ok   { background: var(--teal-dim);  color: var(--teal); }
+    .fi-warn { background: var(--amber-dim); color: var(--amber); }
+    .fi-err  { background: var(--red-dim);   color: var(--red); }
+    .feed-msg { font-size: 11px; line-height: 1.5; color: var(--text); }
+    .feed-meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .feed-tag {
+      font-family: var(--mono); font-size: 9px;
+      background: var(--blue-dim); color: var(--blue);
+      border: 1px solid var(--blue); border-radius: 3px;
+      padding: 1px 5px; margin-left: 5px;
+    }
+
+    /* Bottom panels */
+    .bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .mini-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .mini-head {
+      font-size: 10px; font-weight: 500; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .05em;
+      padding: 9px 14px; border-bottom: 1px solid var(--border);
+    }
+    .mini-body { padding: 10px 14px; }
+
+    /* Gauges */
+    .gauge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .gauge-lbl { font-size: 11px; color: var(--text); width: 60px; flex-shrink: 0; }
+    .gauge-track { flex: 1; height: 3px; background: var(--subtle); border-radius: 2px; }
+    .gauge-fill { height: 100%; border-radius: 2px; transition: width .4s; }
+    .gauge-pct { font-size: 11px; font-family: var(--mono); color: var(--muted); width: 34px; text-align: right; }
+
+    /* Materials */
+    .mat-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 11px;
+    }
+    .mat-row:last-child { border-bottom: none; }
+    .mat-name { font-weight: 500; }
+    .mat-detail { font-size: 10px; color: var(--muted); margin-top: 2px; font-family: var(--mono); }
+
+    /* JWT panel */
+    .jwt-endpoint {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 5px; padding: 7px 10px;
+      font-family: var(--mono); font-size: 11px; color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .jwt-method { color: var(--teal); margin-right: 6px; }
+    .jwt-meta { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .jwt-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
+
+    /* Session modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.7); z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: var(--surface); border: 1px solid var(--border-hi);
+      border-radius: 10px; padding: 28px 32px; max-width: 360px; width: 90%;
+      text-align: center;
+    }
+    .modal-icon { font-size: 36px; margin-bottom: 12px; color: var(--amber); }
+    .modal-h { font-size: 16px; font-weight: 500; margin-bottom: 8px; }
+    .modal-p { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+    .modal-cd { font-size: 28px; font-family: var(--mono); color: var(--red); font-weight: 500; margin-bottom: 20px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: center; }
+    .btn-primary {
+      padding: 9px 20px; border-radius: 6px;
+      background: var(--teal); color: #000; border: none;
+      font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font);
+    }
+    .btn-secondary {
+      padding: 9px 20px; border-radius: 6px;
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border); font-size: 13px; cursor: pointer; font-family: var(--font);
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand"><div class="brand-dot"></div> Command Room</div>
+      <div class="plant-tag">Plant A · Sector 3</div>
+    </div>
+    <div class="topbar-right">
+      <a href="{% url 'dashboard:yield_input' %}" class="nav-link">＋ Input yield</a>
+      <a href="{% url 'admin:index' %}" class="nav-link" target="_blank">Admin</a>
+      <div class="alert-pill">⚠ 2 alerts</div>
+      <div class="session-pill">
+        <div class="session-dot"></div>
+        Session <span id="session-timer">15:00</span>
+      </div>
+      <div class="user-chip">{{ request.user.username|upper|slice:":2" }}</div>
+      <a href="{% url 'logout' %}" class="nav-link">↪ Logout</a>
+    </div>
+  </div>
+
+  <!-- Filter bar (auto-submitting) -->
+  <form method="get" id="filter-form">
+    <div class="filterbar">
+      <label>Line</label>
+      <select name="line" onchange="document.getElementById('filter-form').submit()">
+        <option value="all" {% if active_line == 'all' %}selected{% endif %}>All lines</option>
+        {% for line in all_lines %}
+          <option value="{{ line.code }}" {% if active_line == line.code %}selected{% endif %}>{{ line.name }}</option>
+        {% endfor %}
+      </select>
+      <div class="sep"></div>
+      <label>Range</label>
+      <select name="range" onchange="document.getElementById('filter-form').submit()">
+        <option value="today"   {% if active_range == 'today' %}selected{% endif %}>Today</option>
+        <option value="week"    {% if active_range == 'week' %}selected{% endif %}>Last 7 days</option>
+        <option value="month"   {% if active_range == 'month' %}selected{% endif %}>This month</option>
+        <option value="quarter" {% if active_range == 'quarter' %}selected{% endif %}>This quarter</option>
+      </select>
+      <div class="sep"></div>
+      <label>Shift</label>
+      <select name="shift" onchange="document.getElementById('filter-form').submit()">
+        <option value="all"       {% if active_shift == 'all' %}selected{% endif %}>All shifts</option>
+        <option value="morning"   {% if active_shift == 'morning' %}selected{% endif %}>Morning</option>
+        <option value="afternoon" {% if active_shift == 'afternoon' %}selected{% endif %}>Afternoon</option>
+        <option value="night"     {% if active_shift == 'night' %}selected{% endif %}>Night</option>
+      </select>
+      <div class="live-indicator">
+        <div class="session-dot"></div> IoT sensors live
+      </div>
+    </div>
+  </form>
+
+  <!-- Scrollable content -->
+  <div class="content">
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Accumulated yield</div>
+        <div class="kpi-value">{{ total_units|floatformat:"0" }}</div>
+        <div class="kpi-delta up">↑ units produced</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Defect rate</div>
+        <div class="kpi-value {% if defect_rate > 3 %}dn{% else %}up{% endif %}">{{ defect_rate }}%</div>
+        <div class="kpi-delta neutral">Target &lt; 2.5%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Material spend</div>
+        <div class="kpi-value">₱{{ material_spend|floatformat:"0" }}</div>
+        <div class="kpi-delta neutral">Ordered this period</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg OEE</div>
+        <div class="kpi-value {% if avg_oee > 80 %}up{% elif avg_oee > 60 %}neutral{% else %}dn{% endif %}">{{ avg_oee }}%</div>
+        <div class="kpi-delta neutral">Target &gt; 80%</div>
+      </div>
+    </div>
+
+    <!-- Main grid: chart + feed -->
+    <div class="main-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Yield trend — units/hour</span>
+          <span class="panel-badge">Live</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="yieldChart" role="img" aria-label="Line chart of hourly yield per production line"></canvas>
+        </div>
+        <div class="lines-head">
+          <span>Production line</span>
+          <span style="text-align:right">Output</span>
+          <span style="text-align:right">Yield%</span>
+          <span style="text-align:right">Status</span>
+        </div>
+        {% for summary in line_summaries %}
+        <div class="line-row">
+          <div>
+            <div class="line-name">{{ summary.line.name }}</div>
+            <div class="line-sub">Sector · {{ summary.line.get_sector_display }}</div>
+          </div>
+          <div class="line-val">{{ summary.units|default:"—" }}</div>
+          <div class="line-val">
+            {{ summary.yield_rate }}%
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:{{ summary.yield_rate }}%;background:{% if summary.yield_rate >= 96 %}var(--teal){% elif summary.yield_rate >= 90 %}var(--amber){% else %}var(--red){% endif %}"></div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <span class="chip chip-{{ summary.line.status }}">
+              {% if summary.line.status == 'run' %}Running
+              {% elif summary.line.status == 'warn' %}Warning
+              {% else %}Halted{% endif %}
+            </span>
+          </div>
+        </div>
+        {% empty %}
+        <div class="line-row"><div class="line-sub" style="grid-column:1/-1">No data for selected filters.</div></div>
+        {% endfor %}
+      </div>
+
+      <!-- Sensor feed -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">IoT sensor feed</span>
+          <span class="panel-badge">JWT ⚿</span>
+        </div>
+        <div class="feed-body">
+          {% for event in sensor_events %}
+          <div class="feed-item">
+            <div class="feed-icon fi-{{ event.event_type }}">
+              {% if event.event_type == 'ok' %}✓{% elif event.event_type == 'warn' %}!{% else %}✗{% endif %}
+            </div>
+            <div>
+              <div class="feed-msg">
+                {{ event.message }}
+                {% if event.line %}<span class="feed-tag">{{ event.line.code }}</span>{% endif %}
+              </div>
+              <div class="feed-meta">{{ event.sensor_id }} · {{ event.received_at|timesince }} ago</div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="feed-meta" style="padding:10px 0">No sensor events.</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="bottom-row">
+
+      <!-- Gauges -->
+      <div class="mini-panel">
+        <div class="mini-head">Process efficiency</div>
+        <div class="mini-body">
+          {% for summary in line_summaries %}
+          <div class="gauge-row">
+            <div class="gauge-lbl">{{ summary.line.code|slice:"5:" }}</div>
+            <div class="gauge-track">
+              <div class="gauge-fill" style="width:{{ summary.oee }}%;background:{% if summary.oee >= 80 %}var(--teal){% elif summary.oee >= 60 %}var(--amber){% else %}var(--red){% endif %}"></div>
+            </div>
+            <div class="gauge-pct">{{ summary.oee }}%</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Materials -->
+      <div class="mini-panel">
+        <div class="mini-head">Material purchases</div>
+        <div class="mini-body">
+          {% for m in materials %}
+          <div class="mat-row">
+            <div>
+              <div class="mat-name">{{ m.material_name }}</div>
+              <div class="mat-detail">{{ m.quantity }} {{ m.unit }} · ₱{{ m.total_cost|floatformat:"0" }}</div>
+            </div>
+            <span class="chip {% if m.status == 'delivered' %}chip-run{% elif m.status == 'in_transit' %}chip-warn{% elif m.status == 'pending' %}chip-warn{% else %}chip-stop{% endif %}">
+              {{ m.get_status_display }}
+            </span>
+          </div>
+          {% empty %}
+          <div class="mat-detail">No purchases found.</div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- JWT endpoints -->
+      <div class="mini-panel">
+        <div class="mini-head">JWT sensor endpoints</div>
+        <div class="mini-body">
+          <div class="jwt-endpoint"><span class="jwt-method">POST</span>/api/v2/yield/push</div>
+          <div class="jwt-endpoint"><span class="jwt-method">GET</span>/api/v2/yield/stream</div>
+          <div class="jwt-endpoint"><span class="jwt-method">GET</span>/api/v2/lines/status</div>
+          <div class="jwt-endpoint"><span class="jwt-method">POST</span>/api/v2/sensors/event</div>
+          <div class="jwt-meta"><div class="jwt-dot"></div> RS256 · 24h token lifetime · RBAC</div>
+          <div class="jwt-meta"><div class="jwt-dot"></div> POST /api/token/ to authenticate</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /shell -->
+
+<!-- Session timeout modal -->
+<div class="modal-overlay" id="sessionModal">
+  <div class="modal-box">
+    <div class="modal-icon">⏸</div>
+    <div class="modal-h">Session expiring</div>
+    <div class="modal-p">Your command room terminal has been inactive. You will be logged out automatically to protect plant data.</div>
+    <div class="modal-cd" id="modal-countdown">60</div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="extendSession()">Stay logged in</button>
+      <button class="btn-secondary" onclick="window.location='{% url "logout" %}'">Log out now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SESSION_TIMEOUT = {{ session_timeout }};
+let remaining = SESSION_TIMEOUT;
+let warned = false, cdInterval = null;
+const timerEl = document.getElementById('session-timer');
+const modal = document.getElementById('sessionModal');
+const cdEl = document.getElementById('modal-countdown');
+
+function fmt(s) {
+  return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+}
+function resetTimer() {
+  remaining = SESSION_TIMEOUT; warned = false;
+  timerEl.classList.remove('warning');
+  modal.classList.remove('show');
+  clearInterval(cdInterval);
+}
+['click','keydown','mousemove','touchstart'].forEach(ev =>
+  document.addEventListener(ev, resetTimer, {passive:true}));
+
+setInterval(() => {
+  remaining = Math.max(0, remaining - 1);
+  timerEl.textContent = fmt(remaining);
+  if (remaining <= 120) timerEl.classList.add('warning');
+  if (remaining <= 60 && !warned) {
+    warned = true;
+    let cd = 60; cdEl.textContent = cd;
+    modal.classList.add('show');
+    cdInterval = setInterval(() => {
+      cd--;
+      cdEl.textContent = cd;
+      if (cd <= 0) { clearInterval(cdInterval); window.location = '{% url "logout" %}'; }
+    }, 1000);
+  }
+}, 1000);
+
+function extendSession() {
+  fetch(window.location.href); // ping server to reset server-side session
+  resetTimer();
+}
+
+// Yield chart
+const labels = {{ hourly_labels|safe }};
+const datasets_raw = {{ hourly_datasets|safe }};
+const line_codes = {{ line_codes|safe }};
+const colors = { 'LINE-A':'#1fb882','LINE-B':'#e8a838','LINE-C':'#4d90d4','LINE-D':'#e05252' };
+const dashes  = { 'LINE-A':[],'LINE-B':[],'LINE-C':[],'LINE-D':[5,4] };
+
+new Chart(document.getElementById('yieldChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: line_codes.map(code => ({
+      label: code,
+      data: datasets_raw[code],
+      borderColor: colors[code] || '#7a7d85',
+      backgroundColor: (colors[code] || '#7a7d85') + '18',
+      borderDash: dashes[code] || [],
+      tension: 0.4, pointRadius: 2, borderWidth: 2,
+    }))
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color:'#7a7d85', font:{size:10}, boxWidth:10, boxHeight:2 } } },
+    scales: {
+      x: { ticks:{color:'#7a7d85',font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'} },
+      y: { ticks:{color:'#7a7d85',font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'}, min:0 }
+    }
+  }
+});
+</script>
+</body>
+</html>

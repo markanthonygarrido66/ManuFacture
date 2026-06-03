@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Command Room — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e0f11; --surface: #16181c; --border: rgba(255,255,255,0.07);
+      --text: #e8e9eb; --muted: #7a7d85; --teal: #1fb882;
+      --red: #e05252; --red-dim: rgba(224,82,82,0.15);
+      --font: 'IBM Plex Sans', sans-serif; --mono: 'IBM Plex Mono', monospace;
+    }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-wrap { width: 360px; }
+    .login-brand { text-align: center; margin-bottom: 28px; }
+    .brand-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); margin-right: 8px; vertical-align: middle; }
+    .brand-name { font-size: 16px; font-weight: 500; vertical-align: middle; }
+    .brand-sub { font-size: 11px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+    .login-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px; }
+    .login-card h1 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+    .login-card p { font-size: 12px; color: var(--muted); margin-bottom: 22px; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .04em; }
+    .field input {
+      width: 100%; background: #0e0f11; border: 1px solid var(--border);
+      border-radius: 6px; padding: 9px 12px; color: var(--text);
+      font-family: var(--font); font-size: 13px;
+    }
+    .field input:focus { outline: none; border-color: var(--teal); }
+    .btn-login {
+      width: 100%; padding: 10px; background: var(--teal); color: #000;
+      border: none; border-radius: 6px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font); margin-top: 4px;
+    }
+    .error-box {
+      background: var(--red-dim); border: 1px solid var(--red);
+      border-radius: 6px; padding: 9px 12px; font-size: 12px; color: var(--red);
+      margin-bottom: 16px;
+    }
+    .timeout-box {
+      background: rgba(232,168,56,0.1); border: 1px solid #e8a838;
+      border-radius: 6px; padding: 9px 12px; font-size: 12px; color: #e8a838;
+      margin-bottom: 16px;
+    }
+    .footer { text-align: center; font-size: 10px; color: var(--muted); margin-top: 16px; font-family: var(--mono); }
+  </style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-brand">
+    <div><span class="brand-dot"></span><span class="brand-name">Command Room</span></div>
+    <div class="brand-sub">Manufacturing Yield Dashboard · Plant A</div>
+  </div>
+  <div class="login-card">
+    <h1>Sign in</h1>
+    <p>Enter your credentials to access the command room terminal.</p>
+
+    {% if request.GET.timeout %}
+    <div class="timeout-box">⏱ You were logged out due to 15 minutes of inactivity.</div>
+    {% endif %}
+
+    {% if form.errors %}
+    <div class="error-box">Invalid username or password. Please try again.</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" autofocus autocomplete="username">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-login">Access terminal →</button>
+    </form>
+  </div>
+  <div class="footer">Session auto-expires after 15 min inactivity · JWT-secured IoT API</div>
+</div>
+</body>
+</html>
