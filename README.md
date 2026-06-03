@@ -22,7 +22,7 @@ python manage.py seed_data
 python manage.py runserver
 ```
 
-Visit **http://127.0.0.1:8000** and log in with:
+Visit **https://manufacturing-dashboard-oyc4.onrender.com/dashboard/** and log in with:
 - Username: `admin`  Password: `admin123`
 
 ---
@@ -67,12 +67,12 @@ All endpoints require `Authorization: Bearer <token>`
 #### Example: Sensor pushing yield data
 ```bash
 # 1. Get token
-curl -X POST http://127.0.0.1:8000/api/token/ \
+curl -X POST https://manufacturing-dashboard-oyc4.onrender.com/dashboard/ api/token/ \
   -H "Content-Type: application/json" \
   -d '{"username":"iot_sensor","password":"sensor_secret_42"}'
 
 # 2. Push yield data
-curl -X POST http://127.0.0.1:8000/api/v2/yield/push \
+curl -X POST https://manufacturing-dashboard-oyc4.onrender.com/dashboard/ api/v2/yield/push \
   -H "Authorization: Bearer <access_token>" \
   -H "Content-Type: application/json" \
   -d '{
