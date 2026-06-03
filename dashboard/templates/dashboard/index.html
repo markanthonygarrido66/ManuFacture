@@ -246,7 +246,7 @@
     </div>
     <div class="topbar-right">
       <a href="{% url 'dashboard:yield_input' %}" class="nav-link">＋ Input yield</a>
-      <a href="{% url 'admin:index' %}" class="nav-link" target="_blank">Admin</a>
+      <a href="{% url 'admin:index' %}" class="nav-link" target="_blank" onclick="return checkManagerPassword()">Admin</a>
       <div class="alert-pill">⚠ 2 alerts</div>
       <div class="session-pill">
         <div class="session-dot"></div>
@@ -525,6 +525,15 @@ new Chart(document.getElementById('yieldChart'), {
     }
   }
 });
+function checkManagerPassword() {
+  const password = prompt("ENTER MANAGER ACCESS PASSWORD:");
+  if (password === "manager123") {
+    return true; // Papasukin sa Django Admin site
+  } else {
+    alert("ACCESS DENIED: Invalid Manager Password.");
+    return false; // Haharangin at hindi papapapasukin
+  }
+}
 </script>
 </body>
 </html>
