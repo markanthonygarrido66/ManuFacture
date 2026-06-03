@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-in-production-use-env-var'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '120.0.0.1', '.onrender.com']
 
@@ -94,6 +94,10 @@ SESSION_COOKIE_AGE = 900          # 15 minutes in seconds
 SESSION_SAVE_EVERY_REQUEST = True  # Reset expiry on every request (rolling window)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+SECURE_HSTS_SECONDS = 31536000
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
