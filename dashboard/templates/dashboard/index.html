@@ -495,9 +495,20 @@ function extendSession() {
   fetch(window.location.href); // ping server to reset server-side session
   resetTimer();
 }
-
-// Yield chart
-const labels = {{ hourly_labels|safe }};
+// Yield chart - Pinilit sa Asia/Manila (+8 Hours Discrepancy Fix)
+const raw_labels = {{ hourly_labels|safe }};
+const labels = raw_labels.map(timeStr => {
+  if (!timeStr.includes(':')) return timeStr;
+  
+  // Hatiin ang HH:MM string
+  let [hours, minutes] = timeStr.split(':').map(Number);
+  
+  // Magdagdag ng 8 oras para sa Philippine Standard Time (PHT)
+  let phtHours = (hours + 8) % 24;
+  
+  // I-format pabalik sa dalawang digit (e.g. 14:00 sa halip na 2:00)
+  return String(phtHours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
+});
 const datasets_raw = {{ hourly_datasets|safe }};
 const line_codes = {{ line_codes|safe }};
 const colors = { 'LINE-A':'#1fb882','LINE-B':'#e8a838','LINE-C':'#4d90d4','LINE-D':'#e05252' };
