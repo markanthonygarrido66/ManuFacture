@@ -47,6 +47,7 @@ while True:
         }
         
         # Ipadala ang data kasama ang JWT Token sa Headers kung mayroon
+        # Ipadala ang data kasama ang JWT Token sa Headers
         response = requests.post(API_URL, json=payload, headers=token_headers, timeout=5)
         
         current_time = datetime.now().strftime("%I:%M:%S %p")
@@ -54,6 +55,8 @@ while True:
             print(f"[{current_time}] ✅ Naipadala sa Render: {simulated_output} units sa {chosen_line}")
         else:
             print(f"[{current_time}] ⚠️ Tugon ng Server (Status): {response.status_code}")
+            # IDAGDAG ITONG LINYANG ITO PARA MAKITA ANG DETALYE NG 400 ERROR:
+            print(f"       🔎 Mensahe ng Error: {response.text}")
             
     except Exception as e:
         print(f"[{datetime.now().strftime('%I:%M:%S %p')}] ❌ Error sa pagpapadala: {e}")
