@@ -9,7 +9,7 @@ API_URL = "https://manufacturing-dashboard-oyc4.onrender.com/api/v2/yield/push"
 
 # PALITAN ITO NG TOTOONG ADMIN CREDENTIALS MO NA NASA DATABASE
 ADMIN_USERNAME = "admin"  
-ADMIN_PASSWORD = "admin123" # <--- Ilagay ang totoong password mo dito
+ADMIN_PASSWORD = "admin123" 
 
 print("🔐 Humihingi ng JWT Access Token mula sa Render...")
 token_headers = {}
@@ -26,26 +26,31 @@ try:
         print("✅ Token successfully generated and loaded!\n")
     else:
         print(f"❌ Failed to get token. Status: {token_response.status_code}")
-        print("Tatatakbo pa rin ang simulator ngunit maaaring mag-401 Error.")
+        print("Tatakbo pa rin ang simulator ngunit maaaring mag-401 Error.")
 except Exception as e:
     print(f"❌ Connection error sa pagkuha ng token: {e}")
 
 print("🚀 IoT Sensor Live Simulator ay Nagsimula na...")
 print("Pindutin ang Ctrl + C sa terminal para patayin ang simulator.\n")
 
+# Listahan ng mga valid na Production Lines sa iyong database
 lines = ["LINE-A", "LINE-B", "LINE-C", "LINE-D"]
 
 while True:
     try:
-        # Mga pekeng Sensor IDs base sa inyong planta
-        sensors = ["SENSOR-LN-A", "SENSOR-LN-B", "SENSOR-LN-C"]
+        # Pumili ng random na linya para maging dynamic ang magkakaibang linya sa graph mo
+        chosen_line = random.choice(lines)
+        
+        # Pag-ma-map ng Sensor ID depende sa napiling linya
+        sensor_id = f"SENSOR-{chosen_line}"
         shifts = ["Day Shift", "Night Shift"]
         
-        # Pag-buo ng tamang payload na hinihingi ng iyong database models
+        # KUMPLETONG PAYLOAD: Kasama na ang line_code at lahat ng naunang hinahanap
         payload = {
-            "sensor_id": random.choice(sensors),
+            "line_code": chosen_line,
+            "sensor_id": sensor_id,
             "units_produced": random.randint(20, 60),
-            "oee_efficiency": round(random.uniform(75.5, 98.2), 2), # Nagbibigay ng random % tulad ng 85.42
+            "oee_efficiency": round(random.uniform(75.5, 98.2), 2),
             "shift": random.choice(shifts)
         }
         
@@ -54,7 +59,7 @@ while True:
         
         current_time = datetime.now().strftime("%I:%M:%S %p")
         if response.status_code in [200, 201]:
-            print(f"[{current_time}] ✅ Matagumpay na naipadala sa Render! ({payload['units_produced']} units via {payload['sensor_id']})")
+            print(f"[{current_time}] ✅ Matagumpay na naipadala sa Render! ({payload['units_produced']} units sa {payload['line_code']})")
         else:
             print(f"[{current_time}] ⚠️ Tugon ng Server (Status): {response.status_code}")
             print(f"       🔎 Mensahe ng Error: {response.text}")
@@ -62,4 +67,5 @@ while True:
     except Exception as e:
         print(f"[{datetime.now().strftime('%I:%M:%S %p')}] ❌ Error sa pagpapadala: {e}")
         
+    # Magpapadala uli pagkatapos ng 60 segundo (1 minuto)
     time.sleep(60)
