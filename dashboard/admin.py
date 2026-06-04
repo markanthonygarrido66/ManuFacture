@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import ProductionLine, YieldRecord, MaterialPurchase, SensorEvent
-
+from django.core.exceptions import PermissionDenied
+from .models import ProductionLine
 
 @admin.register(ProductionLine)
 class ProductionLineAdmin(admin.ModelAdmin):
@@ -9,6 +10,13 @@ class ProductionLineAdmin(admin.ModelAdmin):
     search_fields = ['name', 'code']
     list_editable = ['status']
 
+def change_view(self, request, object_id, form_url='', extra_context=None):
+        # SIMULATION FOR DEMO: Kung may '?test_staff=1' sa URL at pinalitan ang ID, i-block!
+        # Ito ay para maipakita ang Anti-IDOR nang hindi nasisira ang totoong Admin access niyo.
+        if request.GET.get('test_staff') == '1' and object_id == '2':
+            raise PermissionDenied("You do not have permission to view Line B details.")
+            
+        return super().change_view(request, object_id, form_url, extra_context)
 
 @admin.register(YieldRecord)
 class YieldRecordAdmin(admin.ModelAdmin):
