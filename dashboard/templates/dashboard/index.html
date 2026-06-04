@@ -246,7 +246,7 @@
     </div>
     <div class="topbar-right">
       <a href="{% url 'dashboard:yield_input' %}" class="nav-link">＋ Input yield</a>
-      <a href="{% url 'admin:index' %}" class="nav-link" target="_blank">Admin</a>
+      <a href="#" class="nav-link" onclick="openManagerPrompt(event)">Admin</a>
       
       <div class="session-pill">
         <div class="session-dot"></div>
@@ -455,6 +455,20 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="managerModal">
+  <div class="modal-box">
+    <div class="modal-icon">🔐</div>
+    <div class="modal-h">Manager Verification Required</div>
+    <div class="modal-p">Ang bahaging ito ay para sa Manager/Staff lamang. Mangyaring ilagay ang Access Password upang magpatuloy.</div>
+    <input type="password" id="manager-password-input" placeholder="Enter Manager Password" style="width: 100%; padding: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 5px; text-align: center; margin-bottom: 15px; font-family: var(--mono);">
+    <div id="manager-error-msg" style="color: var(--red); font-size: 11px; margin-bottom: 10px; display: none;">❌ Invalid Manager Password!</div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="verifyManagerPassword()">Verify & Open</button>
+      <button class="btn-secondary" onclick="closeManagerPrompt()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SESSION_TIMEOUT = {{ session_timeout }};
 let remaining = SESSION_TIMEOUT;
@@ -536,6 +550,36 @@ new Chart(document.getElementById('yieldChart'), {
     }
   }
 });
+const managerModal = document.getElementById('managerModal');
+const managerInput = document.getElementById('manager-password-input');
+const managerError = document.getElementById('manager-error-msg');
+
+function openManagerPrompt(e) {
+  e.preventDefault();
+  managerInput.value = '';
+  managerError.style.display = 'none';
+  managerModal.classList.add('show');
+}
+
+function closeManagerPrompt() {
+  managerModal.classList.remove('show');
+}
+
+function verifyManagerPassword() {
+  // PALITAN ITO NG GUSTO MONG PIN O PASSWORD PARA SA MANAGER STAFF
+  const HARDCODED_MANAGER_PASSWORD = "manager1234"; 
+  
+  if (managerInput.value === HARDCODED_MANAGER_PASSWORD) {
+    managerModal.classList.remove('show');
+    // Kapag tama ang password, bubuksan ang totoong admin panel sa bagong tab
+    window.open("{% url 'admin:index' %}", "_blank");
+  } else {
+    managerError.style.display = 'block';
+    managerInput.value = '';
+  }
+}
+
+
 </script>
 </body>
 </html>
