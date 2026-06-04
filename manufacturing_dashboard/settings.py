@@ -11,6 +11,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 INSTALLED_APPS = [
+    'cloudinary_storage',
+    'cloudinary',
+    'django.contrib.staticfiles',
     'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -118,3 +121,11 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
     'TOKEN_OBTAIN_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainPairSerializer',
 }
+
+LOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dbgty18gr',
+    'API_KEY': '512752523925474',
+    'API_SECRET': '-8khbc-qlb0ju7PpXcyeJjyazY4'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
