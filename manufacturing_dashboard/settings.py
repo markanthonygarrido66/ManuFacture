@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'dashboard',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -33,6 +34,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'axes.middleware.AxesMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'dashboard.middleware.RollingSessionMiddleware',
@@ -130,3 +132,13 @@ LOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend',                  
+    'django.contrib.auth.backends.ModelBackend',  
+]
+
+AXES_FAILURE_LIMIT = 5            
+AXES_COOLOFF_TIME = 0.5  
+AXES_LOCKOUT_TEMPLATE = None         
+AXES_ONLY_USER_FAILURES = False   
