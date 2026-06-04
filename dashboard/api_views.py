@@ -8,6 +8,10 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import YieldRecord, ProductionLine, SensorEvent
 import logging
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
+from .models import MaterialPurchase
+from .serializers import MaterialPurchaseSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -166,3 +170,8 @@ class SensorEventView(APIView):
             payload=data,
         )
         return Response({'status': 'logged', 'event_id': event.pk}, status=201)
+
+class MaterialPurchaseAPIViewSet(ModelViewSet):
+    queryset = MaterialPurchase.objects.all()
+    serializer_class = MaterialPurchaseSerializer
+    permission_classes = [IsAuthenticated]
