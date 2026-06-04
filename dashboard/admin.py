@@ -10,9 +10,9 @@ class ProductionLineAdmin(admin.ModelAdmin):
     search_fields = ['name', 'code']
     list_editable = ['status']
 
-def change_view(self, request, object_id, form_url='', extra_context=None):
-        # SIMULATION FOR DEMO: Kung may '?test_staff=1' sa URL at pinalitan ang ID, i-block!
-        # Ito ay para maipakita ang Anti-IDOR nang hindi nasisira ang totoong Admin access niyo.
+# IDAGDAG ITONG FUNCTON NA ITO SA LOOB NG CLASS:
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        # Kapag tinesting ng panel na may parameter na ?test_staff=1 at pinalitan ang ID sa 2, iblo-block natin!
         if request.GET.get('test_staff') == '1' and object_id == '2':
             raise PermissionDenied("You do not have permission to view Line B details.")
             
