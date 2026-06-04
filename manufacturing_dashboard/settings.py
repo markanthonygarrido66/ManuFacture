@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-change-this-in-production-use-env-var'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '120.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 INSTALLED_APPS = [
     'unfold',
