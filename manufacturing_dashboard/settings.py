@@ -12,15 +12,15 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 INSTALLED_APPS = [
     'cloudinary_storage',
-    'cloudinary',
-    'django.contrib.staticfiles',
-    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'unfold',
+   
     'rest_framework',
     'rest_framework_simplejwt',
     'dashboard',
