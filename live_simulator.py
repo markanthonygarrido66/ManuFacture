@@ -9,7 +9,7 @@ API_URL = "https://manufacturing-dashboard-oyc4.onrender.com/api/v2/yield/push"
 
 # PALITAN ITO NG TOTOONG ADMIN CREDENTIALS MO NA NASA DATABASE
 ADMIN_USERNAME = "admin"  
-ADMIN_PASSWORD = "your_admin_password_here" # <--- Ilagay ang totoong password mo dito
+ADMIN_PASSWORD = "admin123" # <--- Ilagay ang totoong password mo dito
 
 print("🔐 Humihingi ng JWT Access Token mula sa Render...")
 token_headers = {}
