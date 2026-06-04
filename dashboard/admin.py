@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from .models import ProductionLine, YieldRecord, MaterialPurchase, SensorEvent
 from django.core.exceptions import PermissionDenied
 from .models import ProductionLine
@@ -34,6 +34,21 @@ class MaterialPurchaseAdmin(admin.ModelAdmin):
     search_fields = ['material_name', 'supplier', 'purchase_order']
     list_editable = ['status']
     date_hierarchy = 'ordered_at'
+
+    actions = ['approve_selected_purchases']
+
+    # Ito ang mismong bulk action logic
+    @admin.action(description="Approve Selected Purchases")
+    def approve_selected_purchases(self, request, queryset):
+        # Kukunin ang mga piling order at isasabay na i-update ang status papuntang 'Approved'
+        updated_count = queryset.update(status='Approved')
+        
+        # Magpapakita ng magandang alert banner sa Unfold panel pagkatapos
+        self.message_user(
+            request, 
+            f"Successfully updated {updated_count} purchase orders to Approved.", 
+            messages.SUCCESS
+        )
 
 
 @admin.register(SensorEvent)
