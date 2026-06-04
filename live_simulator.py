@@ -37,25 +37,26 @@ lines = ["LINE-A", "LINE-B", "LINE-C", "LINE-D"]
 
 while True:
     try:
-        chosen_line = random.choice(lines)
-        simulated_output = random.randint(15, 50)
+        # Mga pekeng Sensor IDs base sa inyong planta
+        sensors = ["SENSOR-LN-A", "SENSOR-LN-B", "SENSOR-LN-C"]
+        shifts = ["Day Shift", "Night Shift"]
         
+        # Pag-buo ng tamang payload na hinihingi ng iyong database models
         payload = {
-            "line_code": chosen_line,
-            "output": simulated_output,
-            "defect_count": random.randint(0, 2)
+            "sensor_id": random.choice(sensors),
+            "units_produced": random.randint(20, 60),
+            "oee_efficiency": round(random.uniform(75.5, 98.2), 2), # Nagbibigay ng random % tulad ng 85.42
+            "shift": random.choice(shifts)
         }
         
-        # Ipadala ang data kasama ang JWT Token sa Headers kung mayroon
         # Ipadala ang data kasama ang JWT Token sa Headers
         response = requests.post(API_URL, json=payload, headers=token_headers, timeout=5)
         
         current_time = datetime.now().strftime("%I:%M:%S %p")
         if response.status_code in [200, 201]:
-            print(f"[{current_time}] ✅ Naipadala sa Render: {simulated_output} units sa {chosen_line}")
+            print(f"[{current_time}] ✅ Matagumpay na naipadala sa Render! ({payload['units_produced']} units via {payload['sensor_id']})")
         else:
             print(f"[{current_time}] ⚠️ Tugon ng Server (Status): {response.status_code}")
-            # IDAGDAG ITONG LINYANG ITO PARA MAKITA ANG DETALYE NG 400 ERROR:
             print(f"       🔎 Mensahe ng Error: {response.text}")
             
     except Exception as e:
