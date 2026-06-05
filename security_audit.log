@@ -1,0 +1,125 @@
+[2026-06-05 07:51:21] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:51:22] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:51:54] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:51:54] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:21:53.070332+00:00
+[2026-06-05 07:51:54] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:51:59] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:51:59] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:21:58.364621+00:00
+[2026-06-05 07:51:59] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:52:05] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:52:05] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:22:03.830844+00:00
+[2026-06-05 07:52:05] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:52:12] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:52:12] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:22:10.693615+00:00
+[2026-06-05 07:52:12] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:52:15] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:52:15] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:22:14.166379+00:00
+[2026-06-05 07:52:15] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:52:15] WARNING [axes.handlers.database]: AXES: Locking out {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"} after repeated login failures.
+[2026-06-05 07:56:35] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:56:49] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:56:49] INFO [axes.handlers.database]: AXES: Reset 5 access attempts from database.
+[2026-06-05 07:56:55] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:56:57] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:57:06] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:57:06] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:27:04.839090+00:00
+[2026-06-05 07:57:06] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:57:18] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:57:18] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:27:16.949769+00:00
+[2026-06-05 07:57:18] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:57:25] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:57:25] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:27:24.298507+00:00
+[2026-06-05 07:57:25] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:57:29] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:57:29] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:27:28.578898+00:00
+[2026-06-05 07:57:29] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:57:38] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:57:38] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:27:36.707679+00:00
+[2026-06-05 07:57:38] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:57:38] WARNING [axes.handlers.database]: AXES: Locking out {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"} after repeated login failures.
+[2026-06-05 07:59:16] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:59:17] INFO [axes.handlers.database]: AXES: Reset 5 access attempts from database.
+[2026-06-05 07:59:21] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:59:22] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 07:59:39] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:59:39] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:29:37.697861+00:00
+[2026-06-05 07:59:39] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:59:44] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:59:44] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:29:43.182707+00:00
+[2026-06-05 07:59:44] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:59:49] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:59:49] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:29:48.249207+00:00
+[2026-06-05 07:59:49] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 07:59:57] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 07:59:57] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:29:56.441427+00:00
+[2026-06-05 07:59:57] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:00:02] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:00:02] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:30:01.016438+00:00
+[2026-06-05 08:00:02] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:00:02] WARNING [axes.handlers.database]: AXES: Locking out {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"} after repeated login failures.
+[2026-06-05 08:01:35] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:01:35] INFO [axes.handlers.database]: AXES: Reset 5 access attempts from database.
+[2026-06-05 08:02:35] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:02:36] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:02:40] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:02:40] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:32:39.424702+00:00
+[2026-06-05 08:02:40] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:02:45] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:02:45] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:32:44.518340+00:00
+[2026-06-05 08:02:45] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:02:58] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:02:58] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:32:57.309214+00:00
+[2026-06-05 08:02:58] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:03:02] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:03:02] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:33:01.360005+00:00
+[2026-06-05 08:03:02] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:03:08] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:03:08] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:33:06.793009+00:00
+[2026-06-05 08:03:08] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:03:08] WARNING [axes.handlers.database]: AXES: Locking out {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"} after repeated login failures.
+[2026-06-05 08:05:33] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:05:52] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:05:52] INFO [axes.handlers.database]: AXES: Reset 5 access attempts from database.
+[2026-06-05 08:05:55] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:05:57] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:06:03] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:06:03] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:36:02.180919+00:00
+[2026-06-05 08:06:03] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:06:11] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:06:11] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:36:09.762181+00:00
+[2026-06-05 08:06:11] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:06:14] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:06:14] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:36:13.158901+00:00
+[2026-06-05 08:06:14] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:06:18] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:06:18] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:36:17.192964+00:00
+[2026-06-05 08:06:18] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:06:22] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:06:22] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:36:21.001192+00:00
+[2026-06-05 08:06:22] WARNING [axes.handlers.database]: AXES: New login failure by {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:06:22] WARNING [axes.handlers.database]: AXES: Locking out {username: "********************", ip_address: "********************", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"} after repeated login failures.
+[2026-06-05 08:09:23] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:09:29] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:09:39] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:09:39] INFO [axes.handlers.database]: AXES: Reset 5 access attempts from database.
+[2026-06-05 08:09:43] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:09:44] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:09:55] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:09:55] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:39:54.015733+00:00
+[2026-06-05 08:09:55] WARNING [axes.handlers.database]: AXES: New login failure by {username: "dgfgfdg", ip_address: "127.0.0.1", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:10:00] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:10:00] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:39:58.694131+00:00
+[2026-06-05 08:10:00] WARNING [axes.handlers.database]: AXES: New login failure by {username: "sdsf", ip_address: "127.0.0.1", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:10:05] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:10:05] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:40:03.874107+00:00
+[2026-06-05 08:10:05] WARNING [axes.handlers.database]: AXES: New login failure by {username: "ssd", ip_address: "127.0.0.1", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:10:08] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:10:08] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:40:07.557002+00:00
+[2026-06-05 08:10:08] WARNING [axes.handlers.database]: AXES: New login failure by {username: "dfds", ip_address: "127.0.0.1", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:10:12] INFO [axes.handlers.database]: AXES: User login failed, running database handler for failure.
+[2026-06-05 08:10:12] INFO [axes.handlers.database]: AXES: Cleaned up 0 expired access attempts from database that were older than 2026-06-04 23:40:11.102431+00:00
+[2026-06-05 08:10:12] WARNING [axes.handlers.database]: AXES: New login failure by {username: "dsff", ip_address: "127.0.0.1", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"}. Created new record in the database.
+[2026-06-05 08:10:12] WARNING [axes.handlers.database]: AXES: Locking out {username: "dsff", ip_address: "127.0.0.1", user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36", path_info: "/login/"} after repeated login failures.
+[2026-06-05 08:13:07] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:13:08] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address
+[2026-06-05 08:13:12] INFO [axes.apps]: AXES: BEGIN version 8.3.1, blocking by ip_address

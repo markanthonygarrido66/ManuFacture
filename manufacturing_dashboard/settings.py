@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-in-production-use-env-var'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
@@ -103,9 +103,13 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 31536000
-SECURE_SSL_REDIRECT = False  # Set to True in production when SSL is configured
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = True  # Set to True in production when SSL is configured
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 # Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -138,7 +142,42 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  
 ]
 
-AXES_FAILURE_LIMIT = 10            
+AXES_FAILURE_LIMIT = 5           
 AXES_COOLOFF_TIME = 0.5  
-AXES_LOCKOUT_TEMPLATE = None         
+         
 AXES_ONLY_USER_FAILURES = False   
+
+AXES_VERBOSE = True
+AXES_LOG_DATA = True
+AXES_SENSITIVE_PARAMETERS = []
+
+# ==============================================================================
+# DEVSECOPS SECURITY LOGGING CONFIGURATION
+# ==============================================================================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'nist_format': {
+            # Heto ang format para makita ang Timestamp, Level, at Mensahe
+            'format': '[%(asctime)s] %(levelname)s [%(name)s]: %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'security_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            # Dito gagawa ng file na security_audit.log sa root folder mo
+            'filename': BASE_DIR / 'security_audit.log',
+            'formatter': 'nist_format',
+        },
+    },
+    'loggers': {
+        'axes': {
+            'handlers': ['security_file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
