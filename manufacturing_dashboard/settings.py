@@ -8,7 +8,7 @@ SECRET_KEY = 'c@ubal3j0_m@nuf@ctur1ng_d@shb0@rd_s3cur3_k3y_2026_v3ry_str0ng!'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = ['manufacturing-dashboard-oyc4.onrender.com', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'cloudinary_storage',
@@ -103,6 +103,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 31536000
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True  # Set to True in production when SSL is configured
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
