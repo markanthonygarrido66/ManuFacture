@@ -146,11 +146,14 @@ AUTHENTICATION_BACKENDS = [
 AXES_FAILURE_LIMIT = 10        
 AXES_COOLOFF_TIME = 0.5  
          
-#AXES_ONLY_USER_FAILURES = False   
+AXES_ONLY_USER_FAILURES = False   
 
 AXES_VERBOSE = True
 AXES_LOG_DATA = True
 AXES_SENSITIVE_PARAMETERS = []
+
+AXES_HANDLER = 'axes.handlers.cache.AxesCacheHandler'
+
 
 # ==============================================================================
 # DEVSECOPS SECURITY LOGGING CONFIGURATION
