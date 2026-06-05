@@ -83,14 +83,14 @@ USE_I18N = True
 USE_TZ = True
 
 # ==============================================================================
-# STATIC & CLOUD STORAGE CONFIGURATION (WHITENOISE CRASH FIXED)
+# STATIC & CLOUD STORAGE CONFIGURATION 
 # ==============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Tinanggal natin ang Whitenoise storage backend para iwas crash sa Third-Party themes
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-# Modern Django 4.2+ Storage mapping
+
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -105,16 +105,16 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
-# Rolling session: 15 minutes of inactivity logs user out
-SESSION_COOKIE_AGE = 900          # 15 minutes in seconds
-SESSION_SAVE_EVERY_REQUEST = True  # Reset expiry on every request (rolling window)
+
+SESSION_COOKIE_AGE = 900         
+SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 31536000
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True  # Set to True in production when SSL is configured
+SECURE_SSL_REDIRECT = True 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -125,7 +125,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',  # <--- IDAGDAG ITONG LINYANG ITO
+        'rest_framework.authentication.SessionAuthentication', 
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -140,7 +140,7 @@ SIMPLE_JWT = {
     'TOKEN_OBTAIN_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainPairSerializer',
 }
 
-# Inayos ang typo mula 'LOUDINARY_STORAGE' tungo sa tamang pangalan
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dbgty18gr',
     'API_KEY': '512752523925474',
@@ -173,7 +173,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'nist_format': {
-            # Heto ang format para makita ang Timestamp, Level, at Mensahe
+           
             'format': '[%(asctime)s] %(levelname)s [%(name)s]: %(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S',
         },
@@ -182,7 +182,7 @@ LOGGING = {
         'security_file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            # Dito gagawa ng file na security_audit.log sa root folder mo
+            
             'filename': BASE_DIR / 'security_audit.log',
             'formatter': 'nist_format',
         },

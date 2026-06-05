@@ -460,10 +460,10 @@
      <div style="background: #111a16; border: 1px solid #1f3329; padding: 30px; border-radius: 12px; width: 350px; text-align: center; color: #fff; font-family: sans-serif;">
        <div style="font-size: 30px; margin-bottom: 10px;">🔐</div>
        <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #4ade80;">Manager Verification</h3>
-       <p style="font-size: 13px; color: #9ca3af; margin-bottom: 20px;">Ang bahaging ito ay para sa Manager lamang. Mangyaring ilagay ang password.</p>
+       <p style="font-size: 13px; color: #9ca3af; margin-bottom: 20px;">This is for Manager Only </p>
        
        <input type="password" id="manager-password-input" placeholder="Enter Password" style="width: 100%; padding: 10px; background: #0b110e; border: 1px solid #1f3329; color: #fff; border-radius: 6px; text-align: center; margin-bottom: 15px; box-sizing: border-box;">
-       <div id="manager-error-msg" style="color: #f87171; font-size: 12px; margin-bottom: 15px; display: none;">❌ Mali ang password mo!</div>
+       <div id="manager-error-msg" style="color: #f87171; font-size: 12px; margin-bottom: 15px; display: none;">❌ Incorrect Password</div>
        
        <div style="display: flex; gap: 10px;">
          <button onclick="verifyManagerPassword()" style="flex: 1; padding: 10px; background: #22c55e; border: none; color: #000; font-weight: bold; border-radius: 6px; cursor: pointer;">Verify</button>
@@ -508,7 +508,7 @@ setInterval(() => {
 }, 1000);
 
 function extendSession() {
-  fetch(window.location.href); // ping server to reset server-side session
+  fetch(window.location.href); 
   resetTimer();
 }
 
@@ -570,12 +570,12 @@ function closeManagerPrompt() {
 function verifyManagerPassword() {
   const passwordInput = document.getElementById('manager-password-input').value;
 
-  // DITO MO ILAGAY ANG GUSTO MONG PASSWORD NG MANAGER STAFF
+ 
   const MANAGER_PASSWORD = "manager1234"; 
 
   if (passwordInput === MANAGER_PASSWORD) {
     document.getElementById('managerModal').style.display = 'none';
-    // Kapag tama, bubuksan ang totoong magandang admin panel sa bagong tab gaya ng dati!
+   
     window.open("/admin/", "_blank");
   } else {
     document.getElementById('manager-error-msg').style.display = 'block';
