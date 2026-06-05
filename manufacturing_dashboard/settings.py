@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'c@ubal3j0_m@nuf@ctur1ng_d@shb0@rd_s3cur3_k3y_2026_v3ry_str0ng!'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['manufacturing-dashboard-oyc4.onrender.com', '127.0.0.1', 'localhost']
 
@@ -38,7 +38,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'dashboard.middleware.RollingSessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+   
 ]
 
 ROOT_URLCONF = 'manufacturing_dashboard.urls'
@@ -80,17 +80,26 @@ TIME_ZONE = 'Asia/Manila'
 USE_I18N = True
 USE_TZ = True
 
+# ==============================================================================
+# STATIC & CLOUD STORAGE CONFIGURATION (WHITENOISE CRASH FIXED)
+# ==============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Tinanggal natin ang Whitenoise storage backend para iwas crash sa Third-Party themes
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# Modern Django 4.2+ Storage mapping
 STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
@@ -130,14 +139,14 @@ SIMPLE_JWT = {
     'TOKEN_OBTAIN_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainPairSerializer',
 }
 
-LOUDINARY_STORAGE = {
+# Inayos ang typo mula 'LOUDINARY_STORAGE' tungo sa tamang pangalan
+CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dbgty18gr',
     'API_KEY': '512752523925474',
     'API_SECRET': '-8khbc-qlb0ju7PpXcyeJjyazY4'
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',                  
     'django.contrib.auth.backends.ModelBackend',  
@@ -146,13 +155,13 @@ AUTHENTICATION_BACKENDS = [
 AXES_FAILURE_LIMIT = 10        
 AXES_COOLOFF_TIME = 0.5  
          
-AXES_ONLY_USER_FAILURES = False   
+   
 
 AXES_VERBOSE = True
 AXES_LOG_DATA = True
 AXES_SENSITIVE_PARAMETERS = []
 
-AXES_HANDLER = 'axes.handlers.cache.AxesCacheHandler'
+AXES_HANDLER = 'axes.handlers.database.AxesDatabaseHandler'
 
 
 # ==============================================================================
