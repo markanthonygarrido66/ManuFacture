@@ -4,7 +4,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-change-this-in-production-use-env-var'
+SECRET_KEY = 'c@ubal3j0_m@nuf@ctur1ng_d@shb0@rd_s3cur3_k3y_2026_v3ry_str0ng!'
 
 DEBUG = False
 
@@ -145,7 +145,7 @@ AUTHENTICATION_BACKENDS = [
 AXES_FAILURE_LIMIT = 5           
 AXES_COOLOFF_TIME = 0.5  
          
-AXES_ONLY_USER_FAILURES = False   
+#AXES_ONLY_USER_FAILURES = False   
 
 AXES_VERBOSE = True
 AXES_LOG_DATA = True
